@@ -1,2 +1,36 @@
 <h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+
+<h1> User info</h1>
+	<%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60 %>
+	<%= @book_detail.user.name %>
+	<%= @book_detail.user.introduction %>
+
+	<% if @book_detail.user == current_user %>
+	<%= link_to "edit", edit_user_path(current_user.id) %>
+	<% else %>
+	<%= link_to "edit2", user_path(current_user.id) %>
+	<% end %>
+
+<h1> New book</h1>
+	<%= form_for(@book) do |f| %>
+		<p>Title</p>
+		<%= f.text_field :title %>
+		<p>Opinion</p>
+		<%= f.text_area :body %>
+		<%= f.submit "Create Book" %>
+	<% end %>
+
+<h1>Book detail</h1>
+
+<table>
+	<tr>
+		<td><%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60 %></td>
+		<td><%= @book_detail.title %></td>
+		<td><%= @book_detail.body %></td>
+
+		<% if @book.id == current_user.id %>
+		<td><%= link_to "Edit", edit_book_path(@book_detail.id) %></td>
+		<td><%= link_to "Destroy", book_path(@book_detail.id), method: :delete %>
+		<% end %>
+	</tr>
+</table>
