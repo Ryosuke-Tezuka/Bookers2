@@ -1,4 +1,5 @@
-<h1>Users info</h1>
+<div class="container">
+<h2>Users info</h2>
 
 <% if @user.errors.any? %>
 	<p><%= @user.errors.count %> errors prohibited this obj from being saved:</p>
@@ -9,13 +10,15 @@
 <% end %>
 
 <%= form_for(@user) do |f| %>
-	
-	<p> Name</p>
+
+	Name
 	<%= f.text_field :name %>
 	<p> Image</p>
 	<%= f.attachment_field :profile_image %>
-	<p> Introduction</p>
+	Introduction
 	<%= f.text_area :introduction %>
+	<br>
 	<%= f.submit "Update User" %>
 
 <% end %>
+</div>

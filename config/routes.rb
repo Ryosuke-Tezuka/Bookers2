@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   resources :books, only: [:create, :index, :show, :edit, :update, :destroy]
 
   root to: 'top#home'
-  get 'about' => 'top#about'
+  get '/home/about' => 'top#about'
 
 end

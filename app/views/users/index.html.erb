@@ -1,34 +1,61 @@
-<h1>Users#index</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
 
-<h1> User info</h1>
-	<%= attachment_image_tag current_user, :profile_image, :fill, 60, 60 %>
-	<%= current_user.name %>
-	<%= current_user.introduction %>
-	<%= link_to "edit", edit_user_path(current_user.id) %>
+<h2> User info</h2>
+	<%= attachment_image_tag current_user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg", size:"100x100" %>
+	<table class="table">
+		<tr>
+			<th>name</th>
+			<th><%= current_user.name %></th>
+		</tr>
+		<tr>
+			<th>introduction</th>
+			<th><%= current_user.introduction %></th>
+		</tr>
+	</table>
+		<%= link_to edit_user_path(current_user.id) do %>
+			<button type="button" class="btn btn-default btn-block">
+				<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+			</button>
+		<% end %>
 
-<h1> New book</h1>
+<h2> New book</h2>
+
 	<%= form_for(@book) do |f| %>
-		<p>Title</p>
-		<%= f.text_field :title %>
-		<p>Opinion</p>
-		<%= f.text_area :body %>
-		<%= f.submit "Create Book" %>
+
+	<div class="form-group">
+		<label class="control-label" for="title">Title</label>
+		<%= f.text_field :title, class:"form-control" %>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="opinion">Opinion</label>
+		<%= f.text_area :body, class:"form-control" %>
+	</div>
+		<%= f.submit "Create Book", class:"btn btn-primary btn-block" %>
+
 	<% end %>
 
-<h1>Users</h1>
+</div>
 
-<table>
+<div class="col-lg-9">
+<h2>Users</h2>
+
+<table class="table table-hover">
 	<tr>
 		<th>image</th><th>name</th><th></th>
-	<tr>
+	</tr>
 
 	<% @users.each do |user| %>
 
 	<tr>
-		<td><%= attachment_image_tag user, :profile_image, :fill, 60, 60 %></td>
+		<td><%= attachment_image_tag user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size:"40x40" %></td>
 		<td><%= user.name %></td>
 		<td><%= link_to "Show", user_path(user.id) %></td>
 	</tr>
 
 	<% end %>
 </table>
+</div>
+</div>
+</div>

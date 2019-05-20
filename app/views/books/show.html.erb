@@ -1,36 +1,79 @@
-<h1>Books#show</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
 
-<h1> User info</h1>
-	<%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60 %>
-	<%= @book_detail.user.name %>
-	<%= @book_detail.user.introduction %>
+<h2> User info</h2>
+	<%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg", size:"60x60" %>
+	<table class="table">
+		<tr>
+			<th>name</th>
+			<th><%= @book_detail.user.name %></th>
+		</tr>
+		<tr>
+			<th>introduction</th>
+			<th><%= @book_detail.user.introduction %></th>
+		</tr>
+	</table>
 
 	<% if @book_detail.user == current_user %>
-	<%= link_to "edit", edit_user_path(current_user.id) %>
+		<button type="button" class="btn btn-default btn-block">
+		<%= link_to edit_user_path(current_user.id) do %>
+		<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+		</button>
+		<% end %>
 	<% else %>
-	<%= link_to "edit2", user_path(current_user.id) %>
+		<button type="button" class="btn btn-default btn-block">
+		<%= link_to user_path(current_user.id) do %>
+		<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+		</button>
+		<% end %>
 	<% end %>
 
-<h1> New book</h1>
+<h2> New book</h2>
 	<%= form_for(@book) do |f| %>
-		<p>Title</p>
-		<%= f.text_field :title %>
-		<p>Opinion</p>
-		<%= f.text_area :body %>
-		<%= f.submit "Create Book" %>
+
+	<div class="form-group">
+		<label class="control-label" for="title">Title</label>
+		<%= f.text_field :title, class:"form-control" %>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="opinion">Opinion</label>
+		<%= f.text_area :body, class:"form-control" %>
+	</div>
+		<%= f.submit "Create Book", class:"btn btn-primary btn-block" %>
+
 	<% end %>
+</div>
 
-<h1>Book detail</h1>
+		<div class="col-lg-9">
+<h2>Book detail</h2>
 
-<table>
+<table class="table table-hover">
 	<tr>
-		<td><%= attachment_image_tag @book_detail.user, :profile_image, :fill, 60, 60 %></td>
+		<td>
+			<% if @book_detail.user == current_user %>
+				<%= attachment_image_tag current_user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg", size:"40x40" %><br>
+				<%= link_to current_user.name, user_path(current_user.id) %>
+			<% else %>
+				<%= attachment_image_tag @book_detail.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg", size:"100x100" %><br>
+				<%= link_to @book_detail.user.name, user_path(@book_detail.user.id) %>
+			<% end %>
+		</td>
 		<td><%= @book_detail.title %></td>
 		<td><%= @book_detail.body %></td>
 
-		<% if @book.id == current_user.id %>
-		<td><%= link_to "Edit", edit_book_path(@book_detail.id) %></td>
-		<td><%= link_to "Destroy", book_path(@book_detail.id), method: :delete %>
+		<% if @book_detail.user == current_user %>
+		<td>
+			<button type="button" class="btn-sm btn-success">
+			<%= link_to "Edit", edit_book_path(@book_detail.id) %></button>
+		</td>
+		<td>
+			<button type="button" class="btn-sm btn-danger">
+			<%= link_to "Destroy", book_path(@book_detail.id), method: :delete %></button>
+		</td>
 		<% end %>
 	</tr>
 </table>
+</div>
+</div>
+</div>

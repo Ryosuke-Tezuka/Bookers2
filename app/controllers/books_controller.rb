@@ -1,9 +1,12 @@
 class BooksController < ApplicationController
 
+  before_action :authenticate_user!
+
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def ensure_correct_user
-    if current_user.id != params[:id].to_i
+    @book = Book.find(params[:id])
+    if current_user.id != @book.user.id
       redirect_to books_path
     end
   end
@@ -13,8 +16,8 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
-    flash[:notice] = "Successfully Completed!!"
-    redirect_to books_path
+    flash[:notice] = "successfully Completed!!"
+    redirect_to book_path(@book.id)
     else
     render :index
     end
@@ -38,7 +41,7 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.find(params[:id])
     if @book.update(book_params)
-    flash[:notice] = "Successfully Completed!!"
+    flash[:notice] = "successfully Completed!!"
     redirect_to book_path(@book.id)
     else
     render :index
@@ -48,7 +51,7 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    flash[:notice] = "Successfully Completed!!"
+    flash[:notice] = "successfully Completed!!"
     redirect_to books_path
   end
 
